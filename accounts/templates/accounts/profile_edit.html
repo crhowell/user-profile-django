@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Profile | {{ super }}{% endblock %}
+
+{% block body %}
+    <form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+        {% if field.errors %}
+            <ul>
+            {% for error in field.errors %}
+              <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {{ field.label }}
+        <div class="row">
+        {{ field}}
+        </div>
+    {% endfor %}
+    <button type="submit">Update</button>
+    </form>
+{% endblock %}

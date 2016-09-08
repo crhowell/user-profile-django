@@ -1,3 +1,4 @@
+from django.views.generic import DetailView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,10 +11,28 @@ from .forms import ProfileForm
 from .models import Profile
 
 
-@login_required
+@login_required(login_url='/accounts/sign_in/')
 def profile(request):
     usr_profile = Profile.objects.get(user=request.user)
     return render(request, 'accounts/profile.html', {'profile': usr_profile})
+
+@login_required
+def profile_edit(request):
+    print(request.GET)
+    usr_profile = Profile.objects.get(user=request.user)
+    form = ProfileForm(initial={
+        'first_name': usr_profile.first_name,
+        'last_name': usr_profile.last_name,
+        'email': usr_profile.email,
+        'short_bio': usr_profile.short_bio,
+        'date_of_birth': usr_profile.date_of_birth})
+    if request.method == 'POST':
+        if form.is_valid():
+            form = ProfileForm(request.POST, instance=usr_profile)
+            form.save()
+            return HttpResponseRedirect(reverse('accounts:profile'))
+        return render(request, 'accounts/profile_edit.html', {'form': form})
+    return render(request, 'accounts/profile_edit.html', {'form': form})
 
 
 def sign_in(request):
@@ -57,7 +76,7 @@ def sign_up(request):
                 request,
                 "You're now a user! You've been signed in, too."
             )
-            return HttpResponseRedirect(reverse('home'))  # TODO: go to profile
+            return HttpResponseRedirect(reverse('accounts:profile'))  # TODO: go to profile
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 
