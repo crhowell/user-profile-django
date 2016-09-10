@@ -5,20 +5,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from .forms import ProfileForm
+from .forms import ProfileForm, ChangePasswordForm
 from .models import Profile
 
 
 @login_required(login_url='/accounts/sign_in/')
-def profile(request):
-    usr_profile = Profile.objects.get(user=request.user)
-    return render(request, 'accounts/profile.html', {'profile': usr_profile})
+def profile_show(request, user_pk):
+    profile = get_object_or_404(Profile, user=user_pk)
+    return render(request, 'accounts/profile.html', {'profile': profile})
 
-@login_required
+
+@login_required(login_url='/accounts/sign_in/')
 def profile_edit(request):
-    print(request.GET)
     usr_profile = Profile.objects.get(user=request.user)
     form = ProfileForm(initial={
         'first_name': usr_profile.first_name,
@@ -28,11 +28,21 @@ def profile_edit(request):
         'date_of_birth': usr_profile.date_of_birth})
     if request.method == 'POST':
         if form.is_valid():
-            form = ProfileForm(request.POST, instance=usr_profile)
+            form = ProfileForm(request.POST)
             form.save()
-            return HttpResponseRedirect(reverse('accounts:profile'))
+            messages.success(request, 'Profile saved!')
+            return HttpResponseRedirect(reverse('accounts:profile', args=(request.user.pk,)))
+        messages.error(request, 'There was an error with your changes.')
         return render(request, 'accounts/profile_edit.html', {'form': form})
     return render(request, 'accounts/profile_edit.html', {'form': form})
+
+
+@login_required(login_url='/accounts/sign_in')
+def change_password(request):
+    form = ChangePasswordForm()
+    if request.method == 'POST':
+        pass
+    return render(request, 'accounts/change_password.html', {'form': form})
 
 
 def sign_in(request):
@@ -45,7 +55,7 @@ def sign_in(request):
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect(
-                        reverse('accounts:profile')  # TODO: go to profile
+                        reverse('accounts:profile', args=(request.user.pk,))
                     )
                 else:
                     messages.error(
@@ -76,7 +86,7 @@ def sign_up(request):
                 request,
                 "You're now a user! You've been signed in, too."
             )
-            return HttpResponseRedirect(reverse('accounts:profile'))  # TODO: go to profile
+            return HttpResponseRedirect(reverse('accounts:profile', args=(request.user.pk,)))  # TODO: go to profile
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 

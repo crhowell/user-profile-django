@@ -4,7 +4,10 @@
 
 {% block body %}
     <div class="grid-75">
-        <a href="{% url 'accounts:profile_edit' %}" class="button">Edit</a>
+        {% if profile.user ==  user %}
+            <a href="{% url 'accounts:profile_edit' %}" class="button">Edit</a>
+            <a href="{% url 'accounts:change_password' %}" class="button">Change Password</a>
+        {% endif %}
         <div><img src="#avatar" /></div>
         <h3>First Name</h3>
         {{ profile.first_name }}
