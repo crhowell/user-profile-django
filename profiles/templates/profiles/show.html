@@ -5,19 +5,22 @@
 {% block body %}
     <div class="grid-75">
         {% if profile.user ==  user %}
-            <a href="{% url 'accounts:profile_edit' %}" class="button">Edit</a>
+            <a href="{% url 'profile:edit' %}" class="button">Edit</a>
             <a href="{% url 'accounts:change_password' %}" class="button">Change Password</a>
         {% endif %}
         <div><img src="#avatar" /></div>
         <h3>First Name</h3>
-        {{ profile.first_name }}
+        <p>{{ profile.first_name }}</p>
         <h3>Last Name</h3>
-        {{ profile.last_name }}
+        <p>{{ profile.last_name }}</p>
         <h3>E-Mail</h3>
-        {{ profile.email }}
+        <p>{{ profile.email }}</p>
         <h3>Bio</h3>
-        {{ profile.short_bio }}
+        <p>{{ profile.bio }}</p>
         <h3>DOB</h3>
-        {{ profile.date_of_birth }}
+        <p>{{ profile.dob }}</p>
+        <h3>Profile URL</h3>
+        {% url 'profile:show' profile.profile_uid as the_url %}
+        <p><a href="{% url 'profile:show' profile.profile_uid %}">http://{{ request.get_host }}{{ the_url }}</a></p>
     </div>
 {% endblock %}

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Profile | {{ super }}{% endblock %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}
