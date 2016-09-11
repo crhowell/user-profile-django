@@ -1,8 +1,21 @@
 {% extends 'layout.html' %}
 {% block body %}
+    <div class="grid-25">
+        {% if user.is_authenticated %}
+        <nav>
+            <ul>
+
+                <li><a href="{% url 'profile:list' %}">Users</a></li>
+            </ul>
+        </nav>
+        {% else %}
+            <p>You are not currently logged in.</p>
+        {% endif %}
+    </div>
     <div class="grid-75">
-        <h1>Welcome!</h1>
+        <h1>Welcome to</h1>
+        <h3>User Profiles with Django</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad amet assumenda beatae blanditiis, deserunt doloremque ea earum excepturi id, impedit ipsam magnam nulla obcaecati, quidem quis soluta tenetur vitae?</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad amet assumenda beatae blanditiis, deserunt doloremque ea earum excepturi id, impedit ipsam magnam nulla obcaecati, quidem quis soluta tenetur vitae?</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem, ea eaque facere harum ipsam iure, molestiae omnis provident quia, reprehenderit soluta sunt unde velit. Beatae illum natus quidem!</p>
     </div>
 {% endblock %}

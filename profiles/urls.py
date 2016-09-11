@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'me/$', views.my_profile, name='me'),
     url(r'create/$', views.create_profile, name='create'),
     url(r'edit/$', views.edit_profile, name='edit'),
+    url(r'^$', views.show_profiles, name='list'),
 ]

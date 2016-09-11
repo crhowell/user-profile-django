@@ -3,16 +3,14 @@
 {% block title %}My Profile | {{ super }}{% endblock %}
 
 {% block body %}
-    <div class="grid-75">
+    <div class="grid-50">
         {% if profile.user ==  user %}
             <a href="{% url 'profile:edit' %}" class="button">Edit</a>
             <a href="{% url 'accounts:change_password' %}" class="button">Change Password</a>
         {% endif %}
-        <div><img src="#avatar" /></div>
-        <h3>First Name</h3>
-        <p>{{ profile.first_name }}</p>
-        <h3>Last Name</h3>
-        <p>{{ profile.last_name }}</p>
+        <div class="row"><img src="{{ profile.get_avatar_url }}" width="125px"/></div>
+        <h3>Name</h3>
+        <p>{{ profile.first_name }} {{ profile.last_name }}</p>
         <h3>E-Mail</h3>
         <p>{{ profile.email }}</p>
         <h3>Bio</h3>

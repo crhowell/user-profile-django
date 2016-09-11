@@ -3,7 +3,7 @@
 {% block title %}Create A Profile | {{ super }}{% endblock %}
 
 {% block body %}
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
         {% if field.errors %}

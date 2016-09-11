@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}User Profiles | {{ super }}{% endblock %}
+
+{% block body %}
+
+    {% if profiles %}
+        {% for profile in profiles %}
+            <div class="grid-25">
+                <img src="{{ profile.get_avatar_url }}" alt="Avatar" width="120px">
+            </div>
+            <div class="grid-50">
+            <h2><a href="{% url 'profile:show' profile.profile_uid %}">{{ profile.first_name }} {{ profile.last_name }}</a></h2>
+            <em>User since</em>
+            <p>{{ profile.created_on.date }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Oops, there are currently no profiles to show.</h3>
+    {% endif %}
+
+
+{% endblock %}

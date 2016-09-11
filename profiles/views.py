@@ -35,7 +35,7 @@ def edit_profile(request):
     if profile:
         form = ProfileForm(instance=profile)
         if request.method == 'POST':
-            form = ProfileForm(instance=profile, data=request.POST)
+            form = ProfileForm(instance=profile, data=request.POST, files=request.FILES)
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Profile updated!')
@@ -51,13 +51,18 @@ def edit_profile(request):
 def create_profile(request):
     form = ProfileForm()
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, files=request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            messages.success(request, 'Profile created!')
+            messages.success(request, 'Profile was created!')
             return HttpResponseRedirect(reverse('profile:me'))
         messages.error(request, 'Invalid form, check fields and try again.')
         # Does it break when my form is invalid?
     return render(request, 'profiles/create.html', {'form': form})
+
+
+def show_profiles(request):
+    profiles = Profile.objects.all()
+    return render(request, 'profiles/list.html', {'profiles': profiles})
