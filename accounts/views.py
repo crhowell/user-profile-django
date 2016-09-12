@@ -11,9 +11,14 @@ from .forms import ChangePasswordForm
 
 @login_required(login_url='/accounts/sign_in')
 def change_password(request):
-    form = ChangePasswordForm()
+    form = ChangePasswordForm(request.user)
     if request.method == 'POST':
-        pass
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Password changed.')
+            login(request, request.user)
+            return HttpResponseRedirect(reverse('profile:me'))
     return render(request, 'accounts/change_password.html', {'form': form})
 
 

@@ -3,21 +3,29 @@
 {% block title %}Create A Profile | {{ super }}{% endblock %}
 
 {% block body %}
-    <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
-        {% if field.errors %}
-            <ul>
-            {% for error in field.errors %}
-              <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        {{ field.label }}
-        <div class="row">
-        {{ field}}
-        </div>
-    {% endfor %}
-    <button type="submit">Create</button>
-    </form>
+    <div class="grid-100">
+        <h2>Create your profile</h2>
+        <hr/>
+    </div>
+    <div class="grid-100">
+        <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.errors %}
+                <ul>
+                {% for error in field.errors %}
+                  <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {{ field.label }}
+            <div class="row">
+            {{ field }}
+            </div>
+        {% endfor %}
+            <button class="button button-primary" type="submit">Create</button>
+            <a href="{% url 'profile:list' %}" class="button">Skip for now</a>
+        </form>
+    </div>
+
 {% endblock %}

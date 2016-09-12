@@ -21,7 +21,6 @@ def my_profile(request):
     return HttpResponseRedirect(reverse('profile:create'))
 
 
-@login_required(login_url='/accounts/sign_in/')
 def show_profile(request, profile_slug):
     profile = get_object_or_404(Profile, profile_uid=profile_slug)
     if request.user == profile.user:

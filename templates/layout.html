@@ -45,7 +45,7 @@
             <div class="circle--fluid--cell circle--fluid--primary">
                 <nav>
                     <ul class="circle--inline">
-                        <li><a href="{% url 'profile:me' %}">My Profile</a></li>
+                        <li><a href="{% url 'profile:list' %}">Circle Profiles</a></li>
                     </ul>
                 </nav>
             </div>
@@ -57,8 +57,7 @@
                             <li><a href="{% url 'accounts:sign_in' %}">Sign
                                 In</a></li>
                         {% else %}
-                            <!-- view profile link here? -->
-                            <!-- edit profile link here? -->
+                            <li><a href="{% url 'profile:me' %}">My Profile</a></li>
                             <li><a href="{% url 'accounts:sign_out' %}">Sign Out</a></li>
                         {% endif %}
                     </ul>

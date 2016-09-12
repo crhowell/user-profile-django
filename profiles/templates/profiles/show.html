@@ -3,11 +3,11 @@
 {% block title %}My Profile | {{ super }}{% endblock %}
 
 {% block body %}
+    <div class="grid-100">
+        <h2>{{ profile.full_name }}'s Profile</h2>
+        <hr/>
+    </div>
     <div class="grid-50">
-        {% if profile.user ==  user %}
-            <a href="{% url 'profile:edit' %}" class="button">Edit</a>
-            <a href="{% url 'accounts:change_password' %}" class="button">Change Password</a>
-        {% endif %}
         <div class="row"><img src="{{ profile.get_avatar_url }}" width="125px"/></div>
         <h3>Name</h3>
         <p>{{ profile.first_name }} {{ profile.last_name }}</p>
@@ -17,8 +17,14 @@
         <p>{{ profile.bio }}</p>
         <h3>DOB</h3>
         <p>{{ profile.dob }}</p>
-        <h3>Profile URL</h3>
-        {% url 'profile:show' profile.profile_uid as the_url %}
-        <p><a href="{% url 'profile:show' profile.profile_uid %}">http://{{ request.get_host }}{{ the_url }}</a></p>
+    </div>
+    <div class="grid-50">
+        {% if profile.user ==  user %}
+            <div class="row"><a href="{% url 'profile:edit' %}" class="button positive">Edit</a></div>
+            <div class="row"><a href="{% url 'accounts:change_password' %}" class="button negative">Change Password</a></div>
+            <h3>Profile URL</h3>
+            {% url 'profile:show' profile.profile_uid as the_url %}
+            <p><a href="{% url 'profile:show' profile.profile_uid %}">http://{{ request.get_host }}{{ the_url }}</a></p>
+        {% endif %}
     </div>
 {% endblock %}

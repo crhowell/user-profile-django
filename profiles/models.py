@@ -51,6 +51,10 @@ class Profile(models.Model):
                 print('Could not create profile.')
 
     @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    @property
     def get_avatar_url(self):
         print('hapennnn')
         if self.avatar and hasattr(self.avatar, 'url'):

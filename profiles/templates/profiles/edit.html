@@ -3,9 +3,17 @@
 {% block title %}Edit Profile | {{ super }}{% endblock %}
 
 {% block body %}
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
-    </form>
+    <div class="grid-100">
+        <h2>Update your profile</h2>
+        <hr/>
+    </div>
+    <div class="grid-100">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button button-primary" type="submit">Update</button>
+            <a href="{% url 'profile:me' %}" class="button">Cancel</a>
+        </form>
+    </div>
+
 {% endblock %}
