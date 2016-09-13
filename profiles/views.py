@@ -16,7 +16,6 @@ def my_profile(request):
     profile = Profile.objects.filter(user=request.user).first()
     if profile:
         return render(request, 'profiles/show.html', {'profile': profile})
-    form = ProfileForm()
     messages.error(request, 'You have not setup your profile yet!')
     return HttpResponseRedirect(reverse('profile:create'))
 
@@ -39,7 +38,6 @@ def edit_profile(request):
                 form.save()
                 messages.success(request, 'Profile updated!')
                 return HttpResponseRedirect(reverse('profile:me'))
-            # Does it break if form is invalid?
         return render(request, 'profiles/edit.html', {'form': form})
 
     messages.error(request, 'You have not setup your profile yet!')
@@ -58,7 +56,6 @@ def create_profile(request):
             messages.success(request, 'Profile was created!')
             return HttpResponseRedirect(reverse('profile:me'))
         messages.error(request, 'Invalid form, check fields and try again.')
-        # Does it break when my form is invalid?
     return render(request, 'profiles/create.html', {'form': form})
 
 
