@@ -13,7 +13,6 @@ def alt_avatar_url(email):
 
 
 def image_upload(instance, filename):
-    print(instance)
     if filename:
         base_filename, filename_ext = os.path.splitext(filename)
         return 'avatars/{}/{}{}'.format(
