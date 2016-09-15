@@ -96,7 +96,8 @@ class ChangePasswordForm(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 == password2:
-            validate_all(self.user, old_password, password2, length=8)
+            # Validate field against all checks
+            validate_all(self.user, old_password, password2, length=14)
             return password2
         else:
             raise forms.ValidationError(

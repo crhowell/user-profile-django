@@ -1,13 +1,10 @@
-from django.views.generic import DetailView
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from .forms import ProfileForm
+from .forms import ProfileForm, UpdateProfileForm
 from .models import Profile
 
 
@@ -31,9 +28,10 @@ def show_profile(request, profile_slug):
 def edit_profile(request):
     profile = Profile.objects.filter(user=request.user).first()
     if profile:
-        form = ProfileForm(instance=profile)
+        form = UpdateProfileForm(instance=profile)
         if request.method == 'POST':
-            form = ProfileForm(instance=profile, data=request.POST, files=request.FILES)
+            form = UpdateProfileForm(
+                instance=profile, data=request.POST, files=request.FILES)
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Profile updated!')

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from .forms import ChangePasswordForm
 
@@ -62,7 +62,7 @@ def sign_up(request):
                 request,
                 "You're now a user! You've been signed in, too."
             )
-            return HttpResponseRedirect(reverse('profile:me'))  # TODO: go to profile
+            return HttpResponseRedirect(reverse('profile:me'))
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 

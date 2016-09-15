@@ -35,7 +35,6 @@ class Profile(models.Model):
                                upload_to=image_upload,
                                null=True,
                                blank=True)
-    has_setup = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -56,7 +55,6 @@ class Profile(models.Model):
 
     @property
     def get_avatar_url(self):
-        print('hapennnn')
         if self.avatar and hasattr(self.avatar, 'url'):
             return self.avatar.url
         else:
