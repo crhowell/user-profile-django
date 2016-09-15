@@ -12,7 +12,8 @@
     `python manage.py migrate`
   4. Start the server
     `python manage.py runserver`
-    OR
-    Specify address and port like so:
+    
+     or
+     
     `python manage.py runserver 0.0.0.0:8000`
   5. Open browser to that address.
